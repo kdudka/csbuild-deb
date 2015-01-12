@@ -1,0 +1,95 @@
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..1c6e954
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,6 @@
++TARGETS = all clean distclean distcheck install
++
++.PHONY: $(TARGETS)
++
++$(TARGETS):
++	$(foreach i, cswrap cscppc csdiff csmock, $(MAKE) -C $(i) $@ &&) true
+diff --git a/README b/README
+new file mode 100644
+index 0000000..6c72e75
+--- /dev/null
++++ b/README
+@@ -0,0 +1,17 @@
++csbuild
++=======
++csbuild is a tool for scanning SRPMs by Static Analysis tools in a fully
++automated way.  You can find the up2date sources in the following repository:
++
++    https://git.fedorahosted.org/cgit/csmock.git
++
++Please report bugs and feature requests to the following mailing-list:
++
++    https://fedorahosted.org/mailman/listinfo/csmock-devel
++
++csmock is licensed under GPLv3+, see COPYING for details.
++
++
++Documentation
++-------------
++See the 'cbuild(1)' man page.
+diff --git a/cscppc/CMakeLists.txt b/cscppc/CMakeLists.txt
+index 5547a07..840fe34 100644
+--- a/cscppc/CMakeLists.txt
++++ b/cscppc/CMakeLists.txt
+@@ -19,6 +19,9 @@ cmake_minimum_required(VERSION 2.8)
+ project(cscppc C)
+ enable_testing()
+ 
++add_definitions("-DPATH_TO_CSCPPC=\"/usr/lib/cscppc\"")
++add_definitions("-DPATH_TO_CSCLNG=\"/usr/lib/csclng\"")
++
+ # make sure that waitid() is available
+ include(CheckFunctionExists)
+ check_function_exists(waitid HAVE_WAITID_FUNCTION)
+diff --git a/cscppc/Makefile b/cscppc/Makefile
+index 43aa901..c429f77 100644
+--- a/cscppc/Makefile
++++ b/cscppc/Makefile
+@@ -39,3 +39,13 @@ distcheck: distclean
+ 
+ install: all
+ 	$(MAKE) -C cscppc_build install
++	install -m0755 -d "$(DESTDIR)/usr/lib/cscppc"
++	install -m0755 -d "$(DESTDIR)/usr/lib/csclng"
++	for i in cc gcc `ls /usr/lib/gcc | head`-gcc; do \
++		ln -s ../../bin/cscppc "$(DESTDIR)/usr/lib/cscppc/$$i"; \
++		ln -s ../../bin/csclng "$(DESTDIR)/usr/lib/csclng/$$i"; \
++	done
++	for i in c++ g++ `ls /usr/lib/gcc | head`-g++; do \
++		ln -s ../../bin/cscppc   "$(DESTDIR)/usr/lib/cscppc/$$i"; \
++		ln -s ../../bin/csclng++ "$(DESTDIR)/usr/lib/csclng/$$i"; \
++	done
+diff --git a/cswrap/CMakeLists.txt b/cswrap/CMakeLists.txt
+index 64e4e2b..0b1912d 100644
+--- a/cswrap/CMakeLists.txt
++++ b/cswrap/CMakeLists.txt
+@@ -19,6 +19,8 @@ cmake_minimum_required(VERSION 2.8)
+ project(cswrap C)
+ enable_testing()
+ 
++add_definitions("-DPATH_TO_WRAP=\"/usr/lib/cswrap\"")
++
+ # initialize pthreads
+ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+ find_package(Threads REQUIRED)
+diff --git a/cswrap/Makefile b/cswrap/Makefile
+index 56a1a83..e3dd669 100644
+--- a/cswrap/Makefile
++++ b/cswrap/Makefile
+@@ -39,3 +39,10 @@ distcheck: distclean
+ 
+ install: all
+ 	$(MAKE) -C cswrap_build install
++	install -m0755 -d "$(DESTDIR)/usr/lib/cswrap"
++	for i in c++ cc g++ gcc clang clang++ cppcheck \
++		`ls /usr/lib/gcc | head`-gcc \
++		`ls /usr/lib/gcc | head`-g++; \
++	do \
++	    ln -s ../../bin/cswrap "$(DESTDIR)/usr/lib/cswrap/$$i"; \
++	done

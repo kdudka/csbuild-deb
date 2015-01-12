@@ -1,0 +1,13 @@
+Source: csbuild
+Section: devel
+Priority: extra
+Maintainer: Kamil Dudka <kdudka@redhat.com>
+Build-Depends: debhelper (>= 8.0.0), asciidoc, cmake, cdbs, docbook-xml, help2man, libboost-all-dev, libxml2-utils, python-git, xsltproc
+Standards-Version: 3.9.2
+Homepage: https://git.fedorahosted.org/git/csmock.git
+
+Package: csbuild
+Architecture: any
+Depends: ${shlibs:Depends}, clang, cppcheck, python, python-git
+Description: Tool for plugging static analyzers into the build process
+ Tool for plugging static analyzers into the build process, free of mock.
