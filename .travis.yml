@@ -1,0 +1,14 @@
+language: cpp
+
+compiler:
+    - gcc
+    - clang
+
+before_install:
+    - sudo apt-get update
+
+install:
+    - sudo apt-get install asciidoc cdbs cmake curl debhelper devscripts docbook-xml help2man libboost-all-dev libxml2-utils python-git xsltproc
+
+script:
+    - make -j9 build
