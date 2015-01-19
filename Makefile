@@ -1,7 +1,9 @@
 CSMOCK_VERSION = 1.6.1
 CSDIFF_VERSION = 1.1.3
-CSWRAP_VERSION = 1.2.0
+CSWRAP_VERSION = 1.2.1
 CSCPPC_VERSION = 1.2.0
+
+DEB_RELEASE = 2
 
 DST_REPO = csbuild
 I386_DIR = dists/precise/contrib/binary-i386
@@ -9,7 +11,7 @@ AMD64_DIR = dists/precise/contrib/binary-amd64
 
 CSBUILD_VERSION = $(CSMOCK_VERSION)
 CSBUILD_SRC = csbuild_$(CSBUILD_VERSION).orig
-CSBUILD_DEB = csbuild_$(CSBUILD_VERSION)-1_amd64.deb
+CSBUILD_DEB = csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE)_amd64.deb
 
 CSBUILD_TGZ = $(CSBUILD_SRC).tar.gz
 CSMOCK_TGZ = $(CSBUILD_SRC)-csmock.tar.gz
@@ -29,7 +31,7 @@ build: prep
 	cd $(CSBUILD_DIR) && debuild -uc -us
 
 pbuild: build
-	pbuilder-dist precise build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-1.dsc
+	pbuilder-dist precise build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE).dsc
 
 $(CSBUILD_DEB):
 	test -r $@ || $(MAKE) pbuild

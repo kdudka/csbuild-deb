@@ -1,5 +1,11 @@
+csbuild (1.6.1-2) unstable; urgency=low
+
+  * update cswrap to 1.2.1
+
+ -- Kamil Dudka <kdudka@redhat.com>  Mon, 19 Jan 2015 16:32:30 +0100
+
 csbuild (1.6.1-1) unstable; urgency=low
 
-  * Initial release (Closes: #0000)
+  * Initial release
 
  -- Kamil Dudka <kdudka@redhat.com>  Wed, 14 Jan 2015 13:26:30 +0100
