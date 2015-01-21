@@ -6,6 +6,9 @@ CPPCHECK_VERSION = 1.67
 
 UBUNTU_MIRROR = http://archive.ubuntu.com/ubuntu/pool
 
+AUTOMAKE_DEB = automake_1.14.1-2ubuntu1_all.deb
+AUTOMAKE_DEB_URL = $(UBUNTU_MIRROR)/main/a/automake-1.14/$(AUTOMAKE_DEB)
+
 DEB_RELEASE = 2
 
 DST_REPO = csbuild
@@ -45,9 +48,9 @@ pbuild: build
 $(CSBUILD_DEB):
 	test -r $@ || $(MAKE) pbuild
 
-repo: $(CSBUILD_DEB)
+repo: $(CSBUILD_DEB) $(AUTOMAKE_DEB)
 	mkdir -p $(DST_REPO)/$(I386_DIR) $(DST_REPO)/$(AMD64_DIR)
-	ln -fv *amd64.deb $(DST_REPO)/$(AMD64_DIR)
+	ln -fv *all.deb *amd64.deb $(DST_REPO)/$(AMD64_DIR)
 	cd csbuild && dpkg-scanpackages $(I386_DIR) | gzip > $(I386_DIR)/Packages.gz
 	cd csbuild && dpkg-scanpackages $(AMD64_DIR) | gzip > $(AMD64_DIR)/Packages.gz
 
@@ -92,3 +95,6 @@ $(CPPCHECK_TGZ):
 
 $(CPPCHECK_TXZ_DEB):
 	curl -O $(UBUNTU_MIRROR)/universe/c/cppcheck/$@
+
+$(AUTOMAKE_DEB):
+	curl -O $(AUTOMAKE_DEB_URL)
