@@ -2,10 +2,10 @@ language: cpp
 compiler: gcc
 
 before_install:
-    - sudo apt-get update
+    - sudo apt-get update -qq
 
 install:
-    - sudo apt-get install asciidoc cdbs cmake curl debhelper devscripts docbook-xml help2man libboost-all-dev libxml2-utils python-git xsltproc
+    - sudo apt-get install asciidoc cdbs cmake curl debhelper devscripts docbook-xml docbook-xsl help2man libboost-all-dev libpcre3-dev libxml2-utils python-git xsltproc
 
 script:
     - make -j9 build

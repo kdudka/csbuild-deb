@@ -2,6 +2,9 @@ CSMOCK_VERSION = 1.6.1
 CSDIFF_VERSION = 1.1.3
 CSWRAP_VERSION = 1.2.1
 CSCPPC_VERSION = 1.2.0
+CPPCHECK_VERSION = 1.67
+
+UBUNTU_MIRROR = http://archive.ubuntu.com/ubuntu/pool
 
 DEB_RELEASE = 2
 
@@ -25,13 +28,19 @@ CSDIFF_DIR = $(CSBUILD_DIR)/csdiff
 CSWRAP_DIR = $(CSBUILD_DIR)/cswrap
 CSCPPC_DIR = $(CSBUILD_DIR)/cscppc
 
+CPPCHECK_DIR = cppcheck-$(CPPCHECK_VERSION)
+CPPCHECK_TGZ = cppcheck_$(CPPCHECK_VERSION).orig.tar.gz
+CPPCHECK_TXZ_DEB = cppcheck_$(CPPCHECK_VERSION)-1.debian.tar.xz
+
 .PHONY: build pbuild prep repo
 
 build: prep
 	cd $(CSBUILD_DIR) && debuild -uc -us
+	cd $(CPPCHECK_DIR) && debuild -uc -us
 
 pbuild: build
 	pbuilder-dist precise build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE).dsc
+	pbuilder-dist precise build --buildresult $(PWD) cppcheck_$(CPPCHECK_VERSION)-1.dsc
 
 $(CSBUILD_DEB):
 	test -r $@ || $(MAKE) pbuild
@@ -42,8 +51,10 @@ repo: $(CSBUILD_DEB)
 	cd csbuild && dpkg-scanpackages $(I386_DIR) | gzip > $(I386_DIR)/Packages.gz
 	cd csbuild && dpkg-scanpackages $(AMD64_DIR) | gzip > $(AMD64_DIR)/Packages.gz
 
-prep: $(CSMOCK_DIR) $(CSDIFF_DIR) $(CSWRAP_DIR) $(CSCPPC_DIR) $(CSBUILD_TGZ)
+prep: $(CSMOCK_DIR) $(CSDIFF_DIR) $(CSWRAP_DIR) $(CSCPPC_DIR) $(CSBUILD_TGZ) $(CPPCHECK_DIR)
 	cd $(CSBUILD_DIR) && for i in $$(<debian/patches/series); do patch -p1 < debian/patches/$$i || exit $$?; done
+	sed -e 's/, libtinyxml2-dev//' -i $(CPPCHECK_DIR)/debian/control
+	sed -e 's/dh_auto_build -- .*$$/dh_auto_build/' -i $(CPPCHECK_DIR)/debian/rules
 
 $(CSMOCK_DIR): $(CSMOCK_TGZ)
 	mkdir $@ && tar -xf $< --strip-components=1 -C $@
@@ -56,6 +67,10 @@ $(CSWRAP_DIR): $(CSWRAP_TGZ)
 
 $(CSCPPC_DIR): $(CSCPPC_TGZ)
 	mkdir $@ && tar -xf $< --strip-components=1 -C $@
+
+$(CPPCHECK_DIR): $(CPPCHECK_TGZ) $(CPPCHECK_TXZ_DEB)
+	tar -xf $(CPPCHECK_TGZ)
+	tar -xf $(CPPCHECK_TXZ_DEB) -C $@
 
 $(CSMOCK_TGZ):
 	curl -o $@ https://git.fedorahosted.org/cgit/csmock.git/snapshot/csmock-$(CSMOCK_VERSION).tar.gz
@@ -71,3 +86,9 @@ $(CSCPPC_TGZ):
 
 $(CSBUILD_TGZ):
 	tar -cT/dev/null | gzip > $@
+
+$(CPPCHECK_TGZ):
+	curl -O $(UBUNTU_MIRROR)/universe/c/cppcheck/$@
+
+$(CPPCHECK_TXZ_DEB):
+	curl -O $(UBUNTU_MIRROR)/universe/c/cppcheck/$@
