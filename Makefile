@@ -1,4 +1,4 @@
-CSMOCK_VERSION = 1.6.1
+CSMOCK_VERSION = 1.6.2
 CSDIFF_VERSION = 1.1.3
 CSWRAP_VERSION = 1.2.1
 CSCPPC_VERSION = 1.2.0
@@ -9,7 +9,7 @@ UBUNTU_MIRROR = http://archive.ubuntu.com/ubuntu/pool
 AUTOMAKE_DEB = automake_1.14.1-2ubuntu1_all.deb
 AUTOMAKE_DEB_URL = $(UBUNTU_MIRROR)/main/a/automake-1.14/$(AUTOMAKE_DEB)
 
-DEB_RELEASE = 2
+DEB_RELEASE = 1
 
 DST_REPO = csbuild
 I386_DIR = dists/precise/contrib/binary-i386
