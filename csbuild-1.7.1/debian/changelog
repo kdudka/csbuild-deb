@@ -1,3 +1,9 @@
+csbuild (1.7.1-1) unstable; urgency=low
+
+  * update to csbuild-1.7.1
+
+ -- Kamil Dudka <kdudka@redhat.com>  Tue, 03 Mar 2015 16:32:30 +0100
+
 csbuild (1.7.0-1) unstable; urgency=low
 
   * update to csbuild-1.7.0
