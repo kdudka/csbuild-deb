@@ -13,8 +13,9 @@ AUTOMAKE_DEB_URL = $(UBUNTU_MIRROR)/main/a/automake-1.14/$(AUTOMAKE_DEB)
 DEB_RELEASE = 1
 
 DST_REPO = csbuild
-I386_DIR = dists/precise/contrib/binary-i386
-AMD64_DIR = dists/precise/contrib/binary-amd64
+UBUNTU_RELEASE ?= trusty
+I386_DIR = dists/$(UBUNTU_RELEASE)/contrib/binary-i386
+AMD64_DIR = dists/$(UBUNTU_RELEASE)/contrib/binary-amd64
 
 CSBUILD_VERSION = $(CSMOCK_VERSION)
 CSBUILD_SRC = csbuild_$(CSBUILD_VERSION).orig
@@ -43,8 +44,8 @@ build: prep
 	cd $(CPPCHECK_DIR) && debuild -uc -us
 
 pbuild: build
-	pbuilder-dist precise build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE).dsc
-	pbuilder-dist precise build --buildresult $(PWD) cppcheck_$(CPPCHECK_VERSION)-$(CPPCHECK_RELEASE).dsc
+	pbuilder-dist $(UBUNTU_RELEASE) build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE).dsc
+	pbuilder-dist $(UBUNTU_RELEASE) build --buildresult $(PWD) cppcheck_$(CPPCHECK_VERSION)-$(CPPCHECK_RELEASE).dsc
 
 $(CSBUILD_DEB):
 	test -r $@ || $(MAKE) pbuild
