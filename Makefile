@@ -1,8 +1,9 @@
-CSMOCK_VERSION = 1.8.3
-CSDIFF_VERSION = 1.2.3
-CSWRAP_VERSION = 1.3.0
-CSCPPC_VERSION = 1.2.0
-CPPCHECK_VERSION = 1.67
+CSMOCK_VERSION = 2.0.1
+CSDIFF_VERSION = 1.3.1
+CSWRAP_VERSION = 1.3.2
+CSCPPC_VERSION = 1.3.1
+CPPCHECK_VERSION = 1.69
+CPPCHECK_RELEASE = 1build1
 
 UBUNTU_MIRROR = http://archive.ubuntu.com/ubuntu/pool
 
@@ -33,7 +34,7 @@ CSCPPC_DIR = $(CSBUILD_DIR)/cscppc
 
 CPPCHECK_DIR = cppcheck-$(CPPCHECK_VERSION)
 CPPCHECK_TGZ = cppcheck_$(CPPCHECK_VERSION).orig.tar.gz
-CPPCHECK_TXZ_DEB = cppcheck_$(CPPCHECK_VERSION)-1.debian.tar.xz
+CPPCHECK_TXZ_DEB = cppcheck_$(CPPCHECK_VERSION)-$(CPPCHECK_RELEASE).debian.tar.xz
 
 .PHONY: build pbuild prep repo
 
@@ -43,7 +44,7 @@ build: prep
 
 pbuild: build
 	pbuilder-dist precise build --buildresult $(PWD) csbuild_$(CSBUILD_VERSION)-$(DEB_RELEASE).dsc
-	pbuilder-dist precise build --buildresult $(PWD) cppcheck_$(CPPCHECK_VERSION)-1.dsc
+	pbuilder-dist precise build --buildresult $(PWD) cppcheck_$(CPPCHECK_VERSION)-$(CPPCHECK_RELEASE).dsc
 
 $(CSBUILD_DEB):
 	test -r $@ || $(MAKE) pbuild
