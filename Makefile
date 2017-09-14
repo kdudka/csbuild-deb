@@ -1,7 +1,7 @@
-CSMOCK_VERSION = 2.0.1
-CSDIFF_VERSION = 1.3.1
-CSWRAP_VERSION = 1.3.2
-CSCPPC_VERSION = 1.3.1
+CSMOCK_VERSION = 2.0.4
+CSDIFF_VERSION = 1.3.2
+CSWRAP_VERSION = 1.3.4
+CSCPPC_VERSION = 1.3.3
 
 UBUNTU_MIRROR = http://archive.ubuntu.com/ubuntu/pool
 
@@ -61,16 +61,16 @@ $(CSCPPC_DIR): $(CSCPPC_TGZ)
 	mkdir $@ && tar -xf $< --strip-components=1 -C $@
 
 $(CSMOCK_TGZ):
-	curl -o $@ https://git.fedorahosted.org/cgit/csmock.git/snapshot/csmock-$(CSMOCK_VERSION).tar.gz
+	curl -Lo $@ https://github.com/kdudka/csmock/releases/download/csmock-$(CSMOCK_VERSION)/csmock-$(CSMOCK_VERSION).tar.gz
 
 $(CSDIFF_TGZ):
-	curl -o $@ https://git.fedorahosted.org/cgit/codescan-diff.git/snapshot/csdiff-$(CSDIFF_VERSION).tar.gz
+	curl -Lo $@ https://github.com/kdudka/csdiff/releases/download/csdiff-$(CSDIFF_VERSION)/csdiff-$(CSDIFF_VERSION).tar.gz
 
 $(CSWRAP_TGZ):
-	curl -o $@ https://git.fedorahosted.org/cgit/cswrap.git/snapshot/cswrap-$(CSWRAP_VERSION).tar.gz
+	curl -Lo $@ https://github.com/kdudka/cswrap/releases/download/cswrap-$(CSWRAP_VERSION)/cswrap-$(CSWRAP_VERSION).tar.gz
 
 $(CSCPPC_TGZ):
-	curl -o $@ https://git.fedorahosted.org/cgit/cscppc.git/snapshot/cscppc-$(CSCPPC_VERSION).tar.gz
+	curl -Lo $@ https://github.com/kdudka/cscppc/releases/download/cscppc-$(CSCPPC_VERSION)/cscppc-$(CSCPPC_VERSION).tar.gz
 
 $(CSBUILD_TGZ):
 	tar -cT/dev/null | gzip > $@
