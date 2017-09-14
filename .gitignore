@@ -1,4 +1,3 @@
-/automake_*.deb
 /csbuild
 /csbuild-*/Makefile
 /csbuild-*/README
@@ -7,6 +6,8 @@
 /csbuild-*/csmock/
 /csbuild-*/cswrap/
 /csbuild-*/debian/csbuild.debhelper.log
+/csbuild-*/debian/csbuild.postinst.debhelper
+/csbuild-*/debian/csbuild.prerm.debhelper
 /csbuild-*/debian/csbuild.substvars
 /csbuild-*/debian/csbuild/
 /csbuild-*/debian/files
@@ -20,12 +21,4 @@
 /csbuild_*.orig-csmock.tar.gz
 /csbuild_*.orig-cswrap.tar.gz
 /csbuild_*.orig.tar.gz
-/cppcheck-*/
-/cppcheck_*.orig.tar.gz
-/cppcheck_*-*.debian.tar.gz
-/cppcheck_*-*.debian.tar.xz
-/cppcheck_*-*.dsc
-/cppcheck_*-*_amd64.build
-/cppcheck_*-*_amd64.changes
-/cppcheck_*-*_amd64.deb
 /last_operation.log
