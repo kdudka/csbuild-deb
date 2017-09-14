@@ -1,3 +1,9 @@
+csbuild (2.0.4-1) unstable; urgency=low
+
+  * update to csbuild-2.0.4
+
+ -- Kamil Dudka <kdudka@redhat.com>  Thu, 14 Sep 2017 10:42:30 +0200
+
 csbuild (2.0.1-1) unstable; urgency=low
 
   * update to csbuild-2.0.1
